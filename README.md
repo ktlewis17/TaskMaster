@@ -1,9 +1,9 @@
-WHAT IT DOES
+### WHAT IT DOES
 
 Our project is designed to let a user setup text-based alarms to themselves.  In particular, a user can designate an alarm to repeat itself several times, at a rate of the user’s choosing.
 
 
-HOW IT WORKS
+### HOW IT WORKS
 
 Starting with the database, we have two tables.  The first one is named UserData, which we use to store a user’s phone number and password for 
 verification purposes.  Any time our project needs a new user created, a user removed, a password changed, or a confirmation that a user’s data 
@@ -15,7 +15,7 @@ can uniquely reference it.  Connecting to both of these is our InformationAPI, w
 Information API is used to interact with the two database tables.  Most of the flows for this API allows a user to interact with the database, by creating or deleting a user, changing a user’s password, and by creating, deleting, or editing an alert.  These flows will be discussed in more detail under the How To Use It section.  There is one flow outside of this list referred to as alert/run.  This flow is designed to work outside of user interaction and is used to regularly request data from the database.  In particular it checks the current date and time as of the request and compares it to all of the alerts in the AlertRequest table.  If there are any alerts that have a matching date and time, it calls the external Twilio API to text the message in that row to the phone number in that row and decrements the repeatcount of the alert.  Should the repeatcount fall below 1, the alert is subsequently deleted to free up space, otherwise the date and time of the alert is incremented by a number of minutes equal to the repeatincrement.  In order to make sure this flow is called regularly, we have a Timepiece java class running outside of the server that creates an indefinite loop designed to make a GET request to the alert/run flow at a set interval.
 
 
-HOW TO USE IT
+### HOW TO USE IT
 
 Each of the flows listed below are designed to make a request to the database when provided with the correct information.  While many of these flows make POST requests, they are able to use GET requests as well if you’re not sure what kind to make.  Each endpoint needs to start with http://3.133.151.211:8081
 
@@ -106,6 +106,10 @@ Allows the user to modify one cell of an alert, in case they change their mind o
 
 
 
-FUTURE IMPROVEMENTS
+### FUTURE IMPROVEMENTS
 
 The main thing we wish to improve upon for this project is to integrate a front end.  We originally were planning on doing so but did not have it fully operational in time.  We would also like to provide greater significance to logging in.  At present, the only security for creating an alert is that the phone number provided must already be in the database, and the only criteria for deleting or editing an alert is that you must know the id number of the alert you wish to modify.  While not very RESTful, we could potentially store a session variable from when the user logs in that stores the phone number of the user, and commands for creating, editing, and deleting alerts could require this value to be passed in without being able to be manually entered by the user.
+
+
+### Developer Team: ###
+#### *Reynaldo D.,  David K., Kat L., and Ryan L.* ####

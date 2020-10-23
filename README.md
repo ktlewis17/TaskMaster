@@ -1,6 +1,6 @@
 ### WHAT IT DOES
 
-Our project is designed to let a user setup text-based alarms to themselves.  In particular, a user can designate an alarm to repeat itself several times, at a rate of the user’s choosing.
+Our project is designed to let a user setup text-based reminders to themselves.  In particular, a user can designate an a reminder to repeat itself several times, at a rate of the user’s choosing.
 
 
 ### HOW IT WORKS

@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<meta charset="ISO-8859-1">
+<title>Twiminder Authentication</title>
+<center><H1><strong>Twiminder</strong></H1></center>
+
+<style>
+
+.container {
+  margin-top: 5px;
+  
+}
+background {
+ background-img: url;
+ 
+} 
+
+
+</style>
+</head>
+
+<center><i><h4>get things done!</h4></i></center>
+		<br>
+<center><h5> Authenticate login</h5></center>   
+
+<body>
+
+<div class="container">
+<div class="panel panel-primary">
+<div class="panel-body">
+<div class="row">
+<div class='col-md-6'>
+		<form action="/auth" th:action="@{/auth}" th:object="${auth}"  method="post">
+ 
+               <div class="form-group">
+                  <label class="control-label">Authentication Code:</label>
+                  <input type="text" th:field="*{content}" class="form-control" name="mobile" id="mobile">
+               </div>
+     
+			<input type="submit" value="Submit">
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</body>
+
+
+</html>

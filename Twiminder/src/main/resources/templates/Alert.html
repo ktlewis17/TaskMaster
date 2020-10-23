@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<meta charset="ISO-8859-1">
+
+<title>Twiminder</title>
+
+<center><H1><strong>Twiminder</strong></H1></center>
+
+<style>
+
+.container {
+  margin-top: 5px;
+  
+}
+background {
+ background-img: url;
+ 
+} 
+
+
+</style>
+</head>
+<center><i><h4>get things done!</h4></i></center>
+		<br>
+			
+<center><h5> Enter a message to get a reminder</h5></center>
+
+		<div class="container">
+		<div class="panel panel-primary">
+		  <div class="panel-body">
+         <div class="row">
+		<div class='col-md-6'>
+		
+		<div class="form-group">
+		<p th:text="'phone: ' + ${user.phone}"/>
+		<p th:text=" 'password: ' + ${user.password}" />
+			</div>
+            <div class="form-group">
+		<form action="#" th:action="@{/alert}" th:object="${alert}"  method="post">
+		
+			<label for="date">Date and Time:</label>
+				<div class='input-group date' id='datetimepicker1'>
+			              <input type="text" th:field="*{content}" class="form-control" />
+			              <span class="input-group-addon">
+			              <span class="glyphicon glyphicon-calendar"></span>
+			            </span>
+			        </div>
+			        
+			 <div class="form-group">
+                  <label class="control-label">Frequency:</label>
+			
+				<select id="Frequency">
+				<option value= "1">1</option>
+				<option value= "2">2</option>
+				<option value= "3">3</option>
+				<option value= "4">4</option>
+				<option value= "5">5</option></select>
+				</div>
+				
+				<div class="form-group">
+                  <label class="control-label">Interval time:</label>
+			      <input type="text" th:field="*{content}" class="form-control" name="interval" id="interval">
+				
+				</div>
+ 
+  		  <div class="form-group">
+              <label class="control-label">Message:</label>
+              <input type= "text" th:field="*{content}" class="form-control" name="message" id="message">
+         </div>
+
+<input type="submit" value="Save">
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script>
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+ });
+</script>
+</body>
+
+
+</html>

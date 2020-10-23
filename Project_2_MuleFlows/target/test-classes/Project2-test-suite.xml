@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:Rey_Flows.xml"/>
+    </spring:beans>
+    <munit:test name="Project2-test-suite-ViewPersonalAlertsTest" description="Test">
+		<mock:when messageProcessor=".*:.*" doc:name="Mock">
+			<mock:with-attributes>
+				<mock:with-attribute name="doc:name" whereValue="#['HTTP']"/>
+			</mock:with-attributes>
+			<mock:then-return payload="Testing Payload Message"/>
+		</mock:when>
+		<munit:set payload="#[]" doc:name="Set Message">
+			<munit:inbound-properties>
+				<munit:inbound-property key="http.request.uri" value="#['phone':'+12087948890']"/>
+			</munit:inbound-properties>
+		</munit:set>
+        <flow-ref name="ViewPersonalAlerts" doc:name="Flow-ref to ViewPersonalAlerts"/>
+		<munit:assert-not-null message="View payload was false" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project2-test-suite-EditPersonalAlertTest" description="Test">
+		<mock:when messageProcessor=".*:.*" doc:name="Mock">
+			<mock:then-return payload="#[]"/>
+		</mock:when>
+        <flow-ref name="EditPersonalAlert" doc:name="Flow-ref to EditPersonalAlert"/>
+		<munit:assert-not-null message="&quot;Edit payload was false&quot;" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project2-test-suite-DeletePersonalAlertTest" description="Test">
+		<mock:when messageProcessor=".*:.*" doc:name="Mock">
+			<mock:then-return payload="#[]">
+				<mock:invocation-properties>
+					<mock:invocation-property key="id" value="62"/>
+				</mock:invocation-properties>
+			</mock:then-return>
+		</mock:when>
+        <flow-ref name="DeletePersonalAlert" doc:name="Flow-ref to DeletePersonalAlert"/>
+		<munit:assert-not-null message="&quot;Delete Payload was false&quot;" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+</mule>

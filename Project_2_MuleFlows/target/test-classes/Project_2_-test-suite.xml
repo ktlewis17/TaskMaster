@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:Rey_Flows.xml"/>
+    </spring:beans>
+    <munit:test name="Project_2_-test-suite-/alert/runTest" description="Test">
+        <flow-ref name="/alert/run" doc:name="Flow-ref to /alert/run"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-/user/addTest" description="Test">
+        <flow-ref name="/user/add" doc:name="Flow-ref to /user/add"/>
+        <munit:assert-null doc:name="Assert Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-/user/editPasswordTest" description="Test">
+        <flow-ref name="/user/editPassword" doc:name="Flow-ref to /user/editPassword"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-/user/deleteTest" description="Test">
+        <flow-ref name="/user/delete" doc:name="Flow-ref to /user/delete"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-/user/searchTest" description="Test">
+        <flow-ref name="/user/search" doc:name="Flow-ref to /user/search"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-/alert/addTest" description="Test">
+        <flow-ref name="/alert/add" doc:name="Flow-ref to /alert/add"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-ViewPersonalAlertsTest" description="Test">
+        <flow-ref name="ViewPersonalAlerts" doc:name="Flow-ref to ViewPersonalAlerts"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-EditPersonalAlertTest" description="Test">
+        <flow-ref name="EditPersonalAlert" doc:name="Flow-ref to EditPersonalAlert"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="Project_2_-test-suite-DeletePersonalAlertTest" description="Test">
+        <flow-ref name="DeletePersonalAlert" doc:name="Flow-ref to DeletePersonalAlert"/>
+        <munit:assert-not-null doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    
+</mule>

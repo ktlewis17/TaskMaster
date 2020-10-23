@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+	<http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+	<http:request-config name="HTTP_Request_Configuration" host="localhost" port="8080" doc:name="HTTP Request Configuration"/>
+	<http:request-config name="HTTP_Request_Configuration1" host="localhost" port="8082" doc:name="HTTP Request Configuration"/>
+	<flow name="/alert/run">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/alert/run" allowedMethods="GET" doc:name="HTTP"/>
+		<http:request config-ref="HTTP_Request_Configuration" path="/alert/run" method="GET" doc:name="Request to Information API"/>
+		<json:json-to-object-transformer returnClass="java.util.List" doc:name="JSON to Object"/>
+		<foreach collection="#[payload]" doc:name="For Each">
+			<set-variable variableName="phone" value="#[payload.phone]" doc:name="phone"/>
+			<set-variable variableName="message" value="#[payload.message]" doc:name="message"/>
+			<http:request config-ref="HTTP_Request_Configuration1" path="/twilio/send" method="GET" doc:name="HTTP">
+
+				<http:request-builder>
+				<http:header headerName="Content-Type" value="application/json" />
+					<http:query-param paramName="phone" value="#[flowVars.phone]"/>
+					<http:query-param paramName="message" value="#[flowVars.message]"/>
+				</http:request-builder>
+			</http:request>
+		</foreach>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="/user/add">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/user/add" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+	
+		<http:request config-ref="HTTP_Request_Configuration" path="/user/add" method="POST" doc:name="Request to Information API">
+		</http:request>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="/user/editPassword">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/user/editPassword" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+		<http:request config-ref="HTTP_Request_Configuration" path="/user/editPassword" method="POST" doc:name="Request to Information API"/>
+
+		<logger message="#[message]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="/user/delete">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/user/delete" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+		<http:request config-ref="HTTP_Request_Configuration" path="/user/delete" method="POST" doc:name="Request to Information API">
+		</http:request>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="/user/search">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/user/search" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+		<http:request config-ref="HTTP_Request_Configuration" path="/user/search" method="POST" doc:name="Request to Information API">
+		</http:request>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="/alert/add">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/alert/add" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+		<http:request config-ref="HTTP_Request_Configuration" path="/alert/add" method="POST" doc:name="Request to Information API"/>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="ViewPersonalAlerts">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/alert/phone/{phone}" allowedMethods="GET" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+
+		<http:request config-ref="HTTP_Request_Configuration" path="alert/phone/{phone}" method="GET" doc:name="Request To alert/phone/{phone}">
+			<http:request-builder>
+				<http:query-param paramName="phone" value="10"/>
+			</http:request-builder>
+		</http:request>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="EditPersonalAlert">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/alert/edit/{id}" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+
+		<http:request config-ref="HTTP_Request_Configuration" path="alert/edit/{id}" method="GET" doc:name="Request To alert/edit/{id}">
+			<http:request-builder>
+				<http:uri-param paramName="id" value="10"/>
+			</http:request-builder>
+		</http:request>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+	<flow name="DeletePersonalAlert">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/alert/delete/{id}" allowedMethods="POST" doc:name="HTTP"/>
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+
+		<http:request config-ref="HTTP_Request_Configuration" path="#[message.inboundProperties.'http.request.uri'.]" method="POST" doc:name="Request To alert/delete/{id}"/>
+		<logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+	</flow>
+</mule>

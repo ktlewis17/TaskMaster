@@ -111,5 +111,11 @@ Allows the user to modify one cell of an alert, in case they change their mind o
 The main thing we wish to improve upon for this project is to integrate a front end.  We originally were planning on doing so but did not have it fully operational in time.  We would also like to provide greater significance to logging in.  At present, the only security for creating an alert is that the phone number provided must already be in the database, and the only criteria for deleting or editing an alert is that you must know the id number of the alert you wish to modify.  While not very RESTful, we could potentially store a session variable from when the user logs in that stores the phone number of the user, and commands for creating, editing, and deleting alerts could require this value to be passed in without being able to be manually entered by the user.
 
 
+**Technologies and Tools used:**
+* Java    
+* Spring Tool Suite
+* Twilio API
+* PostgreSQL
+
 ### Developer Team: ###
 #### *Reynaldo D.,  David K., Kat L., and Ryan L.* ####

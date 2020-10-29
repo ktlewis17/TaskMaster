@@ -115,6 +115,13 @@ The main thing we wish to improve upon for this project is to integrate a front 
 * Spring Tool Suite
 * Twilio API
 * PostgreSQL
+* REST 
+* Mule
+* AWS EC2
+* Jenkins
+* Maven
+* Anypoint Cloudhub
+
 
 ### Developer Team: ###
 #### *Reynaldo D.,  David K., Kat L., and Ryan L.* ####
